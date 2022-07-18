@@ -7,16 +7,12 @@
 html, body {
     font-family: Fira Sans, sans-serif;
     height: 100%;
-    background: #1a1a1a;
+    background-color: white;
     --swiper-theme-color: white;
 }
 
 a {
     text-decoration: none;
-}
-
-.navbar {
-    background: #0008;
 }
 
 .navbar-brand {
@@ -33,18 +29,34 @@ a {
     margin-top: 0.65em;
 }
 
+.swiper {
+    background: #1a1a1a;
+}
+
 #swiper-cover {
     z-index: 1009;
+    /* background-color: #0002; */
     background: rgb(242,30,139);
-    background: linear-gradient(162deg, rgba(242,30,139,0.2) 0%, rgba(34,34,34,0.2) 25%, rgba(34,34,34,0.2) 75%, rgba(0,255,233,0.2) 100%);
+    background: linear-gradient(162deg, rgba(242,30,139,0.25) 0%, rgba(34,34,34,0.2) 35%, rgba(34,34,34,0.2) 70%, rgba(22,185,182,0.4) 100%);
 }
 
 .swiper-splash {
     font-family: Righteous;
-    font-size: 4em;
+    font-size: 2em;
     z-index: 1010;
 }
-
+/* small screens */
+@media (min-width: 576px) {
+    .swiper-splash {
+        font-size: 3em;
+    }
+}
+/* medium screens */
+/* @media (min-width: 768px) {
+    .swiper-splash {
+        font-size: 4em;
+    }
+} */
 /* large screens */
 @media (min-width: 992px) {
     .swiper-splash {
@@ -60,16 +72,32 @@ a {
 
 #photo-credit {
     font-style: italic;
-    font-size: 1.2em;
     z-index: 1010;
 }
 
-#photo-credit > p > a {
+.photo-credit-cover {
+    font-size: 1.2em;
+}
+
+.photo-credit-inline {
+    font-size: 0.95em;
+}
+
+.photo-credit-cover > p > a {
     color: rgb(235, 181, 3);
 }
 
-#photo-credit > p > a:hover {
+.photo-credit-cover > p > a:hover {
     color: rgb(241, 135, 14);
+}
+
+.photo-credit-inline > p > a {
+    font-weight: 600;
+    color: rgb(11, 73, 145);
+}
+
+.photo-credit-inline > p > a:hover {
+    color: rgb(9, 49, 100);
 }
 
 .swiper-pagination, .swiper-button-prev, .swiper-button-next {
@@ -79,10 +107,6 @@ a {
 h1 {
     font-family: Bioweapon;
     margin-bottom: 0.8em;
-}
-
-#content-wrapper {
-    background-color: white;
 }
 
 /**

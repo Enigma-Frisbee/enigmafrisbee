@@ -73,9 +73,13 @@
             <p>Home of Men's Club Ultimate in Dayton</p>
           </div>
 
-          <div class="position-absolute bottom-0 end-0 translate-middle mr-2" id="photo-credit">
+          <div class="position-absolute bottom-0 end-0 translate-middle mr-2 d-none d-md-block photo-credit-cover" id="photo-credit">
             <p>Photos by <a href="https://www.gabrielcabreraphoto.com/" target="_blank" rel="noreferrer noopener">Gabriel Cabrera</a></p>
           </div>
+        </div>
+
+        <div class="d-block d-md-none text-dark photo-credit-inline" id="photo-credit">
+          <p class="m-1">Photos by <a href="https://www.gabrielcabreraphoto.com/" target="_blank" rel="noreferrer noopener">Gabriel Cabrera</a></p>
         </div>
 
         <div id="content-wrapper" class="w-100">
@@ -134,6 +138,14 @@
           prevEl: '.swiper-button-prev',
         },
       });
+
+      $(".navbar-toggler").click(function() {
+        if ($(".navbar").css("background-color") === "rgba(0, 0, 0, 0.8)") {
+          $(".navbar").css("background-color", "#0000");
+        } else {
+          $(".navbar").css("background-color", "#000c");
+        }
+      })
     </script>
   </body>
 </html>
