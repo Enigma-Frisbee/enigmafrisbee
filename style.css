@@ -1,6 +1,14 @@
+@font-face {
+    /* Font credit: https://www.behance.net/gallery/4430569/Bioweapon-FREE-FONT */
+    font-family: Bioweapon;
+    src: url(fonts/BIOWEAPON.ttf);
+}
+
 html, body {
+    font-family: Fira Sans, sans-serif;
     height: 100%;
-    background-color: #333;
+    background: #1a1a1a;
+    --swiper-theme-color: white;
 }
 
 a {
@@ -8,5 +16,99 @@ a {
 }
 
 .navbar {
-    background: #2228;
+    background: #0008;
+}
+
+.navbar-brand {
+    font-family: Bioweapon;
+    font-size: 2em;
+    font-stretch: expanded;
+    padding: 0;
+    margin-right: 1.5em;
+}
+
+.navbar-nav {
+    font-family: Righteous;
+    font-size: 1.15em;
+    margin-top: 0.65em;
+}
+
+#swiper-cover {
+    z-index: 1009;
+    background: rgb(242,30,139);
+    background: linear-gradient(162deg, rgba(242,30,139,0.2) 0%, rgba(34,34,34,0.2) 25%, rgba(34,34,34,0.2) 75%, rgba(0,255,233,0.2) 100%);
+}
+
+.swiper-splash {
+    font-family: Righteous;
+    font-size: 4em;
+    z-index: 1010;
+}
+
+/* large screens */
+@media (min-width: 992px) {
+    .swiper-splash {
+        font-size: 5em;
+    }
+}
+/* extra large screens */
+@media (min-width: 1200px) {
+    .swiper-splash {
+        font-size: 6em;
+    }
+}
+
+#photo-credit {
+    font-style: italic;
+    font-size: 1.2em;
+    z-index: 1010;
+}
+
+#photo-credit > p > a {
+    color: rgb(235, 181, 3);
+}
+
+#photo-credit > p > a:hover {
+    color: rgb(241, 135, 14);
+}
+
+.swiper-pagination, .swiper-button-prev, .swiper-button-next {
+    z-index: 1011;
+}
+
+h1 {
+    font-family: Bioweapon;
+    margin-bottom: 0.8em;
+}
+
+#content-wrapper {
+    background-color: white;
+}
+
+/**
+    Swiper setup
+**/
+/* extra small screens */
+.swiper-slide {
+    width: 100%;
+}
+.swiper-slide > img {
+    width: 100%;
+    height: auto;
+}
+/* medium screens */
+@media (min-width: 768px) {
+    .swiper-slide {
+        width: 50%;
+    }
+}
+/* extra large screens */
+@media (min-width: 1200px) {
+    .swiper-slide {
+        width: 34%;
+    }
+    .swiper-slide > img {
+        height: 100vh;
+        width: auto;
+    }
 }
