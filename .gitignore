@@ -1,1 +1,4 @@
 *.zip
+images/*
+!images/*.svg
+!images/*_minified.jpg

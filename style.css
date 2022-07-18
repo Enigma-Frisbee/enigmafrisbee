@@ -109,12 +109,20 @@ h1 {
     margin-bottom: 0.8em;
 }
 
+#schedule-wrapper {
+    background-color: rgb(10, 14, 71);
+    background: linear-gradient(162deg, rgba(242,30,139,1) 0%, rgba(10, 14, 71, 1) 25%, rgba(10, 14, 71, 1) 75%, rgba(22,185,182,1) 100%);
+}
+
 /**
     Swiper setup
 **/
 /* extra small screens */
 .swiper-slide {
     width: 100%;
+    height: auto;
+    background-size: cover;
+    background-position: center;
 }
 .swiper-slide > img {
     width: 100%;
@@ -130,6 +138,7 @@ h1 {
 @media (min-width: 1200px) {
     .swiper-slide {
         width: 34%;
+        height: 100vh;
     }
     .swiper-slide > img {
         height: 100vh;

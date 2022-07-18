@@ -46,21 +46,20 @@
 
         <div class="swiper">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="images/DG_00141_minified.jpg" class="d-block">
-            </div>
-            <div class="swiper-slide">
-              <img src="images/DG_00205_minified.jpg" class="d-block">
-            </div>
-            <div class="swiper-slide">
-              <img src="images/DG_09859_minified.jpg" class="d-block">
-            </div>
-            <div class="swiper-slide">
-              <img src="images/DG_09876_minified.jpg" class="d-block">
-            </div>
-            <div class="swiper-slide">
-              <img src="images/DG_09951_minified.jpg" class="d-block">
-            </div>
+            <!-- 
+              - use invisible imgs to make sure the divs are the size of the image
+              - show the background images instead of the img tags themselves so we can use background-size: cover, and center the image in the div
+            -->
+            <div class="swiper-slide text-center" style="background-image: url('images/DG_00141_minified.jpg');"><img src="images/DG_00141_minified.jpg" class="invisible"></div>
+            <div class="swiper-slide text-center" style="background-image: url('images/DG_00205_minified.jpg');"><img src="images/DG_00205_minified.jpg" class="invisible"></div>
+            <div class="swiper-slide text-center" style="background-image: url('images/DG_09485_minified.jpg');"><img src="images/DG_09485_minified.jpg" class="invisible"></div>
+            <div class="swiper-slide text-center" style="background-image: url('images/DG_09519_minified.jpg');"><img src="images/DG_09519_minified.jpg" class="invisible"></div>
+            <div class="swiper-slide text-center" style="background-image: url('images/DG_09562_minified.jpg');"><img src="images/DG_09562_minified.jpg" class="invisible"></div>
+            <div class="swiper-slide text-center" style="background-image: url('images/DG_09783_minified.jpg');"><img src="images/DG_09783_minified.jpg" class="invisible"></div>
+            <div class="swiper-slide text-center" style="background-image: url('images/DG_09859_minified.jpg');"><img src="images/DG_09859_minified.jpg" class="invisible"></div>
+            <div class="swiper-slide text-center" style="background-image: url('images/DG_09876_minified.jpg');"><img src="images/DG_09876_minified.jpg" class="invisible"></div>
+            <div class="swiper-slide text-center" style="background-image: url('images/DG_09929_minified.jpg');"><img src="images/DG_09929_minified.jpg" class="invisible"></div>
+            <div class="swiper-slide text-center" style="background-image: url('images/DG_09951_minified.jpg');"><img src="images/DG_09951_minified.jpg" class="invisible"></div>
           </div>
           <div class="swiper-pagination"></div>
           <div class="swiper-button-prev"></div>
@@ -82,38 +81,45 @@
           <p class="m-1">Photos by <a href="https://www.gabrielcabreraphoto.com/" target="_blank" rel="noreferrer noopener">Gabriel Cabrera</a></p>
         </div>
 
-        <div id="content-wrapper" class="w-100">
-          <div id="content" class="mx-auto col-lg-4">
-            <div class="p-3 pt-5 text-dark" id="about">
-              <h1>
-                About Us
-              </h1>
-              <p>
-                Enigma is an open, friendly, and competitive club team, based right out of Dayton! Whether you've played club before,
-                have college ultimate experience, or you're just ready to graduate from playing pickup, we're here to welcome you to Dayton
-                ultimate frisbee.
-              </p>
-            </div>
-    
-            <div class="p-3 pt-5 text-dark" id="schedule">
-              <h1>
-                2022 Schedule
-              </h1>
-              <p>
-                Stay tuned for updates here. For now, try the GroupMe page.
-              </p>
-            </div>
-    
-            <div class="p-3 pt-5 text-dark" id="contact">
-              <h1>
-                Join Us
-              </h1>
-              <p>
-                Get in touch with us on <a href="https://groupme.com/join_group/86479837/Ci7MYH0y" target="_blank" rel="noreferrer noopener"><b>GroupMe</b></a> to join the team and stay up to date!
-              </p>
-            </div>
+        <!-- <div id="content-wrapper" class="w-100">
+          <div id="content" class="mx-auto col-lg-4"> -->
+        <div id="about-wrapper" class="w-100 text-dark">
+          <div class="p-5 mt-2 col-lg-4 mx-auto bg-transparent" id="about">
+            <h1>
+              About Us
+            </h1>
+            <p>
+              Enigma is an open, friendly, and competitive club team, based right out of Dayton, Ohio! Whether you've played club before,
+              have college ultimate experience, or you're just ready to graduate from playing pickup, we're here to welcome you to Dayton
+              ultimate frisbee.
+            </p>
           </div>
         </div>
+
+        <div id="schedule-wrapper" class="w-100 text-light">
+          <div class="p-5 mt-2 col-lg-4 mx-auto bg-transparent" id="schedule">
+            <h1>
+              2022 Schedule
+            </h1>
+            <p>
+              Stay tuned for updates here. For now, try the GroupMe page.
+            </p>
+          </div>
+        </div>
+        
+        <div id="contact-wrapper" class="w-100 text-dark">
+          <div class="p-5 mt-2 col-lg-4 mx-auto bg-transparent" id="contact">
+            <h1>
+              Join Us
+            </h1>
+            <p>
+              Get in touch with us on <a href="https://groupme.com/join_group/86479837/Ci7MYH0y" target="_blank" rel="noreferrer noopener"><b>GroupMe</b></a> to join the team and stay up to date!
+            </p>
+          </div>
+        </div>
+
+        <img src="images/enigma_gear_logo.svg" width="100" class="mb-5">
+
       </main>
     </div>
 
