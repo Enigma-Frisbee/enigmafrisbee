@@ -20,7 +20,14 @@ a {
     font-size: 2em;
     font-stretch: expanded;
     padding: 0;
-    margin-right: 1.5em;
+    margin-right: 0;
+}
+
+/* medium screens */
+@media (min-width: 768px) {
+    .navbar-brand {
+        margin-right: 1.5em;
+    }
 }
 
 .navbar-nav {
