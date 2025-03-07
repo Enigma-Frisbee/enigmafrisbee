@@ -116,6 +116,14 @@ h1 {
     margin-bottom: 0.8em;
 }
 
+#interest-form-wrapper {
+    background-color:rgb(9, 49, 100);
+}
+
+#interest-form > h1 {
+    font-family: "Fira Sans", sans-serif;
+}
+
 #schedule-wrapper {
     background-color: rgb(10, 14, 71);
     background: linear-gradient(162deg, rgba(242,30,139,1) 0%, rgba(10, 14, 71, 1) 25%, rgba(10, 14, 71, 1) 75%, rgba(22,185,182,1) 100%);
