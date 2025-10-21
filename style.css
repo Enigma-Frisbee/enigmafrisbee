@@ -117,7 +117,9 @@ h1 {
 }
 
 #interest-form-wrapper {
-    background-color:rgb(9, 49, 100);
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(20, 70, 130, 1) 0%, rgba(10, 50, 110, 1) 50%, rgba(5, 35, 90, 1) 100%);
 }
 
 #interest-form > h1 {
