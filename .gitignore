@@ -2,3 +2,8 @@
 images/*
 !images/*.svg
 !images/*_minified.jpg
+# Moat task system
+.moat/
+
+# Claude Code configuration
+.claude/
