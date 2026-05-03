@@ -116,7 +116,9 @@ nav.site-nav {
 
 /* ── Hero ── */
 .hero {
-  position: relative; height: clamp(480px, 85vh, 800px);
+  position: relative;
+  height: calc(100svh - 81px);
+  min-height: 480px;
   overflow: hidden; background: var(--color-bg);
 }
 .hero-slides { position: absolute; inset: 0; }
