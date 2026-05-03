@@ -1,203 +1,233 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Home of Men's Club Ultimate Frisbee in Dayton Ohio">
-    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Enigma — Men's Club Ultimate Frisbee, Dayton, Ohio. Competitive. Respected. Always recruiting." />
+<title>Enigma — Men's Club Ultimate · Dayton, OH</title>
+<link rel="icon" href="images/enigma_gear_logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link href="style.css" rel="stylesheet" />
+</head>
+<body>
 
-    <title>Enigma</title>
+<!-- Ticker -->
+<div class="ticker-wrap" id="ticker">
+  <div class="ticker-inner" id="ticker-inner"></div>
+</div>
 
-    <link href="bootstrap-5.2.0-beta1-dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="swiper-8.3.1/swiper-bundle.min.css" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&family=Righteous&display=swap" rel="stylesheet">
+<!-- Nav -->
+<nav class="site-nav">
+  <a href="#" class="nav-logo">≡<span>N</span>IGMA</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#schedule">Schedule</a>
+    <a href="#join">Join</a>
+    <a href="https://discord.gg/Rersr9P27n" class="nav-cta" target="_blank" rel="noopener">Discord ↗</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
-    <script src="https://kit.fontawesome.com/343670f631.js" crossorigin="anonymous"></script>
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <button class="mobile-close" aria-label="Close menu">✕</button>
+  <a href="#about">About</a>
+  <a href="#schedule">Schedule</a>
+  <a href="#join">Join</a>
+  <a href="https://discord.gg/Rersr9P27n" class="mobile-cta" target="_blank" rel="noopener">Join Discord ↗</a>
+</div>
 
-  </head>
-
-  <body class="text-center text-white">
-
-    <div class="d-flex h-100 vh-100 mx-auto flex-column">
-      <header class="position-absolute top-0 start-0 w-100" style="z-index:1001">
-        <nav class="navbar navbar-dark navbar-expand-md px-3">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".collapse" aria-controls=".collapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse">
-            <div class="align-text-top">
-              <a class="navbar-brand align-top" href="#">Enigma</a>
-            </div>
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="#about">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#schedule">Schedule</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#contact">Contact</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </header>
-
-      <main role="main" class="inner">
-
-        <div class="swiper">
-          <div class="swiper-wrapper">
-            <!-- 
-              - use invisible imgs to make sure the divs are the size of the image
-              - show the background images instead of the img tags themselves so we can use background-size: cover, and center the image in the div
-            -->
-            <div class="swiper-slide text-center" style="background-image: url('images/DG_00141_minified.jpg');"><img src="images/DG_00141_minified.jpg" class="invisible"></div>
-            <div class="swiper-slide text-center" style="background-image: url('images/DG_00205_minified.jpg');"><img src="images/DG_00205_minified.jpg" class="invisible"></div>
-            <div class="swiper-slide text-center" style="background-image: url('images/DG_09485_minified.jpg');"><img src="images/DG_09485_minified.jpg" class="invisible"></div>
-            <div class="swiper-slide text-center" style="background-image: url('images/DG_09519_minified.jpg');"><img src="images/DG_09519_minified.jpg" class="invisible"></div>
-            <div class="swiper-slide text-center" style="background-image: url('images/DG_09562_minified.jpg');"><img src="images/DG_09562_minified.jpg" class="invisible"></div>
-            <div class="swiper-slide text-center" style="background-image: url('images/DG_09783_minified.jpg');"><img src="images/DG_09783_minified.jpg" class="invisible"></div>
-            <div class="swiper-slide text-center" style="background-image: url('images/DG_09859_minified.jpg');"><img src="images/DG_09859_minified.jpg" class="invisible"></div>
-            <div class="swiper-slide text-center" style="background-image: url('images/DG_09876_minified.jpg');"><img src="images/DG_09876_minified.jpg" class="invisible"></div>
-            <div class="swiper-slide text-center" style="background-image: url('images/DG_09929_minified.jpg');"><img src="images/DG_09929_minified.jpg" class="invisible"></div>
-            <div class="swiper-slide text-center" style="background-image: url('images/DG_09951_minified.jpg');"><img src="images/DG_09951_minified.jpg" class="invisible"></div>
-          </div>
-          <div class="swiper-pagination"></div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-
-          <div class="position-absolute top-0 start-0 w-100 h-100" id="swiper-cover">
-          </div>
-
-          <div class="position-absolute swiper-splash top-50 start-50 translate-middle rounded p-5">
-            <p>Home of Men's Club Ultimate in Dayton</p>
-          </div>
-
-          <div class="position-absolute bottom-0 end-0 translate-middle mr-2 d-none d-md-block photo-credit-cover" id="photo-credit">
-            <p>Photos by <a href="https://www.gabrielcabreraphoto.com/" target="_blank" rel="noreferrer noopener">Gabriel Cabrera</a></p>
-          </div>
-        </div>
-
-        <!--
-        <div class="d-block d-md-none text-dark photo-credit-inline" id="photo-credit">
-          <p class="m-1">Photos by <a href="https://www.gabrielcabreraphoto.com/" target="_blank" rel="noreferrer noopener">Gabriel Cabrera</a></p>
-        </div>
-        -->
-
-        <div id="interest-form-wrapper" class="w-100 text-light">
-          <div class="py-5 px-4 col-lg-8 mx-auto" id="interest-form">
-              <h1 class="align-middle" ><i>Enigma 2026 is coming soon... join the Discord now to get in touch!</i></h1>
-            <!--
-            <h1><i>The 2025 Season is Almost Here!</i></h1>
-            <p>
-              If you want to play with Enigma or learn more about the team, <a href="https://forms.gle/hqRfhqVjaraseVcV9">fill out our interest form</a> and we'll get back to you!
-            </p>
-            -->
-          </div>
-        </div>
-
-        <!-- <div id="content-wrapper" class="w-100">
-          <div id="content" class="mx-auto col-lg-4"> -->
-        <div id="about-wrapper" class="w-100 text-dark">
-          <div class="p-5 mt-2 col-lg-8 mx-auto bg-transparent" id="about">
-            <h1>
-              About Us
-            </h1>
-            <p>
-              Enigma is a friendly and competitive <a href="https://usaultimate.org/club/" target="_blank" rel="noreferrer noopener">Club Ultimate</a> team
-              based out of Dayton, Ohio! 
-            </p>
-            <p>
-                Our team prides itself on comradery, competition, and growth. We encourage our players to remain
-                active in the Ultimate community outside of the club team, and we demand mutual respect and spirit of
-                the game between our team members and our opponents. We're always looking for new skilled players to
-                join us: whether you've played in club before, played on a college team, or you're just ready to
-                graduate from leagues & pickup to push yourself to the next level, we're here to welcome you to Dayton
-                ultimate frisbee. Join the Discord and come out to practices to try out for the team!
-            </p>
-          </div>
-        </div>
-
-        <div id="schedule-wrapper" class="w-100 text-light">
-          <div class="px-4 py-5 mt-2 col-lg-8 mx-auto bg-transparent" id="schedule">
-            <h1>
-              Schedule
-            </h1>
-            <div class="responsiveCal">
-              <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FNew_York&showPrint=0&mode=AGENDA&title=Enigma%20Ultimate&showTitle=0&src=ZW5pZ21hY2FwdGFpbnNAZ21haWwuY29t&color=%23E67C73" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-            </div>
-            <p class="px-4 mt-3"><i>Click the button at the bottom of the calendar to add it to your Google account.</i></p>
-          </div>
-        </div>
-        
-        <div id="contact-wrapper" class="w-100 text-dark">
-          <div class="p-5 mt-2 col-lg-8 mx-auto bg-transparent" id="contact">
-            <h1>
-              Join Us
-            </h1>
-            <p>
-              <div class="container text-center row">
-                <div class="col">
-                  <a class="fs-4" href="https://forms.gle/hqRfhqVjaraseVcV9">
-                    <i class="fa-solid fa-bolt"></i>
-                    <b>Interest Form</b>
-                  </a>
-                  <p>Want to play with us, or just learn more? Fill this out!</p>
-                </div>
-                <div class="col">
-                  <a class="fs-4" href="https://discord.gg/Rersr9P27n">
-                    <i class="fa-brands fa-discord"></i>
-                    <b>Discord</b>
-                  </a>
-                  <p>For day-to-day team chat & planning</p>
-                </div>
-                <div class="col">
-                  <a class="fs-4" href="https://twitter.com/EnigmasarusFlex">
-                    <i class="fa-brands fa-twitter"></i>
-                    <b>Twitter</b>
-                  </a>
-                  <p>For team chatter and the live tournament updates you never knew you needed</p>
-                </div>
-              </div>
-            </p>
-          </div>
-        </div>
-
-        <img src="images/enigma_gear_logo.svg" width="100" class="mb-5">
-
-      </main>
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="hero-slides" id="hero-slides">
+    <div class="hero-slide active" style="background-image: url('images/DG_09485_minified.jpg');">
+      <div class="hero-slide-bg"></div>
     </div>
+    <div class="hero-slide" style="background-image: url('images/DG_09783_minified.jpg');">
+      <div class="hero-slide-bg"></div>
+    </div>
+    <div class="hero-slide" style="background-image: url('images/DG_09859_minified.jpg');">
+      <div class="hero-slide-bg"></div>
+    </div>
+    <div class="hero-slide" style="background-image: url('images/DG_09929_minified.jpg');">
+      <div class="hero-slide-bg"></div>
+    </div>
+    <div class="hero-slide" style="background-image: url('images/DG_00205_minified.jpg');">
+      <div class="hero-slide-bg"></div>
+    </div>
+  </div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="bootstrap-5.2.0-beta1-dist/js/bootstrap.bundle.min.js"></script>
-    <script src="swiper-8.3.1/swiper-bundle.min.js"></script>
-    <script>
-      var swiper = new Swiper('.swiper', {
-        slidesPerView: 'auto',
-        loop: true,
-        autoplay: {
-          delay: 5000,
-          disableOnInteraction: false,
-        },
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-      });
+  <button class="hero-arrow left" aria-label="Previous slide">&#8592;</button>
+  <button class="hero-arrow right" aria-label="Next slide">&#8594;</button>
 
-      $(".navbar-toggler").click(function() {
-        if ($(".navbar").css("background-color") === "rgba(0, 0, 0, 0.9)") {
-          $(".navbar").css("background-color", "rgba(0, 0, 0, 0)");
-        } else {
-          $(".navbar").css("background-color", "rgba(0, 0, 0, 0.9)");
-        }
-      })
-    </script>
-  </body>
+  <div class="slide-photo-label">Photos by <a href="https://www.gabrielcabreraphoto.com/" target="_blank" rel="noopener noreferrer">Gabriel Cabrera</a></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Dayton, Ohio · Club Ultimate</div>
+    <h1 class="hero-title">Men's<br/>Club<br/><em>Ultimate</em></h1>
+    <p class="hero-subtitle">Competitive. Respected. Always looking for skilled players ready to elevate their game.</p>
+    <div class="hero-actions">
+      <a href="https://discord.gg/Rersr9P27n" class="btn-primary" target="_blank" rel="noopener">Join the Discord ↗</a>
+      <a href="#join" class="btn-secondary">Get Involved</a>
+    </div>
+  </div>
+
+  <div class="hero-dots" id="hero-dots"></div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="section-label">About Enigma</div>
+      <h2 class="section-title" style="margin-bottom:24px;">Built on<br/>competition<br/><span style="color:#e85c2b">&amp; respect</span></h2>
+      <p>Enigma is a <strong>friendly and competitive <a href="https://usaultimate.org/club/" target="_blank" rel="noopener noreferrer">Club Ultimate</a></strong> team based out of Dayton, Ohio. We pride ourselves on camaraderie, competition, and growth.</p>
+      <p>Whether you've played in club before, played on a college team, or you're ready to graduate from leagues &amp; pickup — <strong>we want you here.</strong> Come out to practices and try out for the team.</p>
+      <p style="font-size:13px; color:#555;">We encourage players to remain active in the Ultimate community outside the club team, and demand mutual respect and spirit of the game from everyone.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-num">25<span>+</span></div>
+        <div class="stat-label">Active Players</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">~18</div>
+        <div class="stat-label">Yrs Est.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2<span>×</span></div>
+        <div class="stat-label">Practices / Wk</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">OH</div>
+        <div class="stat-label">Dayton, Ohio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Schedule -->
+<section id="schedule">
+  <div class="schedule-inner">
+    <div class="section-label">2026 Season</div>
+    <h2 class="section-title" style="margin-bottom:32px;">Schedule</h2>
+    <div id="schedule-rows"></div>
+    <a href="https://calendar.google.com/calendar/u/0/r?cid=enigmacaptains@gmail.com" class="schedule-gcal" target="_blank" rel="noopener">
+      + Add to Google Calendar
+    </a>
+  </div>
+</section>
+
+<!-- Join -->
+<section id="join">
+  <div class="join-inner">
+    <div class="section-label">Get Involved</div>
+    <div class="join-headline">
+      Want to<br/><em>Play?</em>
+    </div>
+    <div class="join-cards">
+      <div class="join-card discord">
+        <div class="join-card-icon">💬</div>
+        <div class="join-card-title">Discord</div>
+        <div class="join-card-desc">The primary hub for day-to-day team chat, practice updates, and tournament planning. This is how we coordinate.</div>
+        <a href="https://discord.gg/Rersr9P27n" class="join-card-link" target="_blank" rel="noopener">Join Server →</a>
+      </div>
+      <div class="join-card form">
+        <div class="join-card-icon">📋</div>
+        <div class="join-card-title">Interest Form</div>
+        <div class="join-card-desc">Want to play with us, or just learn more? Fill this out and a captain will reach out directly.</div>
+        <a href="https://forms.gle/hqRfhqVjaraseVcV9" class="join-card-link" target="_blank" rel="noopener">Fill It Out →</a>
+      </div>
+      <div class="join-card twitter">
+        <div class="join-card-icon">𝕏</div>
+        <div class="join-card-title">Twitter / X</div>
+        <div class="join-card-desc">For team chatter and the live tournament updates you never knew you needed.</div>
+        <a href="https://twitter.com/EnigmasarusFlex" class="join-card-link" target="_blank" rel="noopener">Follow Us →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">≡<span>N</span>IGMA</div>
+  <div class="footer-credit">Men's Club Ultimate · Dayton, OH · <a href="/">enigmafrisbee.com</a></div>
+</footer>
+
+<script>
+/* Ticker data */
+const tickerItems = [
+  'Enigma 2026 Season is Here',
+  'Tryouts Open — Join the Discord',
+  'Practice: Tuesdays @ Yankee Park 6–8PM',
+  'Practice: Thursdays @ Yankee Park 6–8PM',
+  'Tournament: CENTX · Summer 2026',
+];
+// Duplicate so the marquee can loop seamlessly via translateX(-50%).
+const tickerEl = document.getElementById('ticker-inner');
+tickerEl.innerHTML = [...tickerItems, ...tickerItems]
+  .map(t => `<span class="ticker-item">${t}</span>`).join('');
+
+/* Hero slider */
+const slides = document.querySelectorAll('.hero-slide');
+const dotsContainer = document.getElementById('hero-dots');
+let currentSlide = 0;
+let heroTimer;
+
+slides.forEach((_, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
+  dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+  dot.addEventListener('click', () => goToSlide(i));
+  dotsContainer.appendChild(dot);
+});
+
+function goToSlide(n) {
+  slides[currentSlide].classList.remove('active');
+  dotsContainer.children[currentSlide].classList.remove('active');
+  currentSlide = (n + slides.length) % slides.length;
+  slides[currentSlide].classList.add('active');
+  dotsContainer.children[currentSlide].classList.add('active');
+  clearInterval(heroTimer);
+  heroTimer = setInterval(() => goToSlide(currentSlide + 1), 5000);
+}
+
+document.querySelector('.hero-arrow.left').addEventListener('click', () => goToSlide(currentSlide - 1));
+document.querySelector('.hero-arrow.right').addEventListener('click', () => goToSlide(currentSlide + 1));
+heroTimer = setInterval(() => goToSlide(currentSlide + 1), 5000);
+
+/* Schedule data — update with the real 2026 schedule once it's set */
+const scheduleData = [
+  { month:'TBD', day:'—', weekday:'',    name:'2026 Schedule Coming Soon', location:'Join the Discord for practice & tournament updates', time:'', type:'practice' },
+];
+
+const scheduleContainer = document.getElementById('schedule-rows');
+scheduleContainer.innerHTML = scheduleData.map(ev => `
+  <div class="schedule-row">
+    <div class="schedule-date">
+      <div class="month">${ev.month}</div>
+      <div class="day">${ev.day}</div>
+      <div class="weekday">${ev.weekday}</div>
+    </div>
+    <div class="schedule-info">
+      <div class="schedule-name">${ev.name}</div>
+      <div class="schedule-location">${ev.location}</div>
+      <span class="schedule-tag ${ev.type}">${ev.type}</span>
+    </div>
+    <div class="schedule-time">${ev.time}</div>
+  </div>`).join('');
+
+/* Mobile menu */
+const mobileMenu = document.getElementById('mobile-menu');
+function toggleMenu() { mobileMenu.classList.toggle('open'); }
+document.getElementById('hamburger').addEventListener('click', toggleMenu);
+document.querySelector('.mobile-close').addEventListener('click', toggleMenu);
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+</script>
+
+</body>
 </html>
