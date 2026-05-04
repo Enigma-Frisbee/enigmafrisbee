@@ -72,7 +72,7 @@
       <h2 class="section-title" style="margin-bottom:24px;">Built on<br/>competition<br/><span style="color:#f2b927">&amp; respect</span></h2>
       <p>Enigma is a competitive <a href="https://usaultimate.org/club/" target="_blank" rel="noopener noreferrer">Club Ultimate</a> team based in Dayton, Ohio. We play to win, and we play for each other.</p>
       <p>Whether you've played club, competed in college, or you're ready to step up from leagues &amp; pickup — <strong>we want you on the line.</strong> Come to practices and try out.</p>
-      <p style="font-size:13px; color:#555;">We expect spirit of the game from everyone who wears the jersey, and we encourage our players to stay active in the wider Ultimate community year-round.</p>
+      <p>We expect spirit of the game from everyone who wears the jersey, and we encourage our players to stay active in the wider Ultimate community year-round.</p>
     </div>
     <div class="about-stats">
       <div class="stat-card">
@@ -144,18 +144,25 @@
 </footer>
 
 <script>
-/* Ticker data */
+const escapeHtml = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* Ticker data — items with `href` render as links; without, plain text. */
 const tickerItems = [
-  'Enigma 2026 Season is Here',
-  'Tryouts Open — Join the Discord',
-  'Practice: Tuesdays @ Yankee Park 6–8PM',
-  'Tournament: Cleveland SURF · May 2026',
+  { text: 'Enigma 2026 Season is Here' },
+  { text: 'Tryouts Open — Join the Discord', href: 'https://discord.gg/Rersr9P27n' },
+  { text: 'Practice: Tuesdays @ Yankee Park 6–8PM' },
+  { text: 'Tournament: Cleveland SURF · May 2026' },
 ];
 // Duplicate so the marquee can loop seamlessly via translateX(-50%).
 const tickerEl = document.getElementById('ticker-inner');
 const star = '<svg class="ticker-star" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,2 15,9 22,9.5 16.5,14.5 18.5,22 12,17.8 5.5,22 7.5,14.5 2,9.5 9,9"/></svg>';
 tickerEl.innerHTML = [...tickerItems, ...tickerItems]
-  .map(t => `<span class="ticker-item">${star}<span>${t}</span></span>`).join('');
+  .map(item => {
+    const inner = `${star}<span>${escapeHtml(item.text)}</span>`;
+    return item.href
+      ? `<a class="ticker-item ticker-link" href="${escapeHtml(item.href)}" target="_blank" rel="noopener">${inner}</a>`
+      : `<span class="ticker-item">${inner}</span>`;
+  }).join('');
 
 /* Hero conveyor: flat strip of portraits, advances one panel at a time
    so the right photo becomes the left and a new one slides in on the right. */
@@ -253,26 +260,80 @@ window.addEventListener('resize', () => applyTransform(false));
 applyTransform(false);
 resetTimer();
 
-/* Schedule data — update with the real 2026 schedule once it's set */
-const scheduleData = [
-  { month:'TBD', day:'—', weekday:'',    name:'2026 Schedule Coming Soon', location:'Join the Discord for practice & tournament updates', time:'', type:'practice' },
-];
-
+/* Schedule — events loaded asynchronously from the public Google Calendar */
 const scheduleContainer = document.getElementById('schedule-rows');
-scheduleContainer.innerHTML = scheduleData.map(ev => `
-  <div class="schedule-row">
+
+const TOURNAMENT_KEYWORDS = ['tournament', 'sectionals', 'regionals', 'nationals', 'conferences', 'worlds'];
+
+function renderScheduleRows(rows) {
+  scheduleContainer.innerHTML = rows.map(ev => `
+  <div class="schedule-row${ev.modifier ? ' ' + ev.modifier : ''}">
     <div class="schedule-date">
-      <div class="month">${ev.month}</div>
-      <div class="day">${ev.day}</div>
-      <div class="weekday">${ev.weekday}</div>
+      <div class="month">${escapeHtml(ev.month)}</div>
+      <div class="day">${escapeHtml(ev.day)}</div>
+      <div class="weekday">${escapeHtml(ev.weekday)}</div>
     </div>
     <div class="schedule-info">
-      <div class="schedule-name">${ev.name}</div>
-      <div class="schedule-location">${ev.location}</div>
-      <span class="schedule-tag ${ev.type}">${ev.type}</span>
+      <div class="schedule-name">${escapeHtml(ev.name)}</div>
+      <div class="schedule-location">${escapeHtml(ev.location)}</div>
+      ${ev.type ? `<span class="schedule-tag ${escapeHtml(ev.type)}">${escapeHtml(ev.type)}</span>` : ''}
     </div>
-    <div class="schedule-time">${ev.time}</div>
+    <div class="schedule-time">${escapeHtml(ev.time)}</div>
   </div>`).join('');
+}
+
+function messageRow(name, location, modifier) {
+  return { month:'', day:'', weekday:'', name, location, time:'', type:'', modifier };
+}
+
+renderScheduleRows([messageRow('Loading schedule…', 'Pulling upcoming events from Google Calendar')]);
+
+function mapCalendarEvent(item) {
+  const isAllDay = !item.start?.dateTime;
+  const startStr = item.start?.dateTime || item.start?.date;
+  const date = isAllDay
+    ? new Date(startStr + 'T00:00:00')
+    : new Date(startStr);
+  const summary = item.summary || '(Untitled)';
+  const lower = summary.toLowerCase();
+  const type = TOURNAMENT_KEYWORDS.some(k => lower.includes(k)) ? 'tournament' : 'practice';
+  return {
+    month: date.toLocaleString('en-US', { month: 'short' }).toUpperCase(),
+    day: String(date.getDate()),
+    weekday: date.toLocaleString('en-US', { weekday: 'short' }).toUpperCase(),
+    name: summary,
+    location: item.location || '',
+    time: isAllDay ? '' : date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
+    type,
+  };
+}
+
+(async function loadSchedule() {
+  const calendarId = encodeURIComponent('enigmacaptains@gmail.com');
+  const apiKey = 'AIzaSyCL0rwkWbjokWFmLk-fwE3kWYv0alkH9Eo';
+  const now = new Date();
+  const later = new Date(now.getTime() + 31 * 24 * 60 * 60 * 1000);
+  const url = `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events`
+    + `?key=${apiKey}`
+    + `&timeMin=${encodeURIComponent(now.toISOString())}`
+    + `&timeMax=${encodeURIComponent(later.toISOString())}`
+    + `&singleEvents=true&orderBy=startTime&maxResults=50`;
+
+  try {
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const data = await resp.json();
+    const items = Array.isArray(data.items) ? data.items : [];
+    if (items.length === 0) {
+      renderScheduleRows([messageRow('No upcoming events in the next month', 'Check back soon — or join the Discord for updates', 'is-empty')]);
+      return;
+    }
+    renderScheduleRows(items.map(mapCalendarEvent));
+  } catch (err) {
+    console.warn('Failed to load Google Calendar events:', err);
+    renderScheduleRows([messageRow("Couldn't load schedule", 'Check the Google Calendar link below', 'is-error')]);
+  }
+})();
 
 /* Mobile menu */
 const mobileMenu = document.getElementById('mobile-menu');

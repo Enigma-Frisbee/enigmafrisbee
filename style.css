@@ -54,6 +54,9 @@ button { font: inherit; }
 @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .ticker-item { display: inline-flex; align-items: center; gap: 0.6em; font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: white; padding: 0 32px; }
 .ticker-item .ticker-star { width: 0.9em; height: 0.9em; flex: none; display: block; fill: currentColor; }
+a.ticker-item { color: inherit; }
+a.ticker-link > span { border-bottom: 1px dotted rgba(var(--rgb-white), 0.5); }
+a.ticker-link:hover > span { border-bottom-style: solid; border-bottom-color: var(--color-white); }
 
 /* ── Nav ── */
 nav.site-nav {
@@ -321,7 +324,7 @@ section { padding: clamp(48px, 7vw, 96px) clamp(16px, 5vw, 64px); }
 }
 .schedule-date .weekday {
   font-family: 'Space Mono', monospace; font-size: 8px;
-  color: var(--color-text-whisper); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 1px;
+  color: var(--color-text-soft); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 1px;
 }
 .schedule-info { padding: 14px 16px; }
 .schedule-name {
