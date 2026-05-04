@@ -20,7 +20,7 @@
 
 <!-- Nav -->
 <nav class="site-nav">
-  <a href="#" class="nav-logo">E<span>N</span>IGMA</a>
+  <a href="#" class="nav-logo"><span>ENI</span>GMA</a>
   <div class="nav-links">
     <a href="#about">About</a>
     <a href="#schedule">Schedule</a>
@@ -43,23 +43,8 @@
 
 <!-- Hero -->
 <section class="hero" id="hero">
-  <div class="hero-slides" id="hero-slides">
-    <div class="hero-slide active" style="background-image: url('images/DG_09485_minified.jpg');">
-      <div class="hero-slide-bg"></div>
-    </div>
-    <div class="hero-slide" style="background-image: url('images/DG_09783_minified.jpg');">
-      <div class="hero-slide-bg"></div>
-    </div>
-    <div class="hero-slide" style="background-image: url('images/DG_09859_minified.jpg');">
-      <div class="hero-slide-bg"></div>
-    </div>
-    <div class="hero-slide" style="background-image: url('images/DG_09929_minified.jpg');">
-      <div class="hero-slide-bg"></div>
-    </div>
-    <div class="hero-slide" style="background-image: url('images/DG_00205_minified.jpg');">
-      <div class="hero-slide-bg"></div>
-    </div>
-  </div>
+  <div class="hero-strip" id="hero-strip"></div>
+  <div class="hero-strip-overlay"></div>
 
   <button class="hero-arrow left" aria-label="Previous slide">&#8592;</button>
   <button class="hero-arrow right" aria-label="Next slide">&#8594;</button>
@@ -154,7 +139,7 @@
 
 <!-- Footer -->
 <footer>
-  <div class="footer-logo">E<span>N</span>IGMA</div>
+  <div class="footer-logo"><span>ENI</span>GMA</div>
   <div class="footer-credit">Men's Club Ultimate · Dayton, OH · <a href="/">enigmafrisbee.com</a></div>
 </footer>
 
@@ -164,41 +149,109 @@ const tickerItems = [
   'Enigma 2026 Season is Here',
   'Tryouts Open — Join the Discord',
   'Practice: Tuesdays @ Yankee Park 6–8PM',
-  'Practice: Thursdays @ Yankee Park 6–8PM',
-  'Tournament: CENTX · Summer 2026',
+  'Tournament: Cleveland SURF · May 2026',
 ];
 // Duplicate so the marquee can loop seamlessly via translateX(-50%).
 const tickerEl = document.getElementById('ticker-inner');
+const star = '<svg class="ticker-star" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,2 15,9 22,9.5 16.5,14.5 18.5,22 12,17.8 5.5,22 7.5,14.5 2,9.5 9,9"/></svg>';
 tickerEl.innerHTML = [...tickerItems, ...tickerItems]
-  .map(t => `<span class="ticker-item">${t}</span>`).join('');
+  .map(t => `<span class="ticker-item">${star}<span>${t}</span></span>`).join('');
 
-/* Hero slider */
-const slides = document.querySelectorAll('.hero-slide');
+/* Hero conveyor: flat strip of portraits, advances one panel at a time
+   so the right photo becomes the left and a new one slides in on the right. */
+const heroPhotos = [
+  { src: 'images/DG_09485_minified.jpg', focalY: '38%' },
+  { src: 'images/DG_09929_minified.jpg', focalY: '28%' },
+  { src: 'images/DG_09783_minified.jpg', focalY: '22%' },
+  { src: 'images/DG_09859_minified.jpg', focalY: '22%' },
+  { src: 'images/DG_00205_minified.jpg', focalY: '22%' },
+  { src: 'images/DG_09876_minified.jpg', focalY: '28%' },
+  { src: 'images/DG_09495_minified.jpg', focalY: '42%' },
+  { src: 'images/DG_09951_minified.jpg', focalY: '22%' },
+  { src: 'images/DG_00141_minified.jpg', focalY: '12%' },
+  { src: 'images/DG_09519_minified.jpg', focalY: '30%' },
+];
+const heroEl = document.getElementById('hero');
+const strip = document.getElementById('hero-strip');
 const dotsContainer = document.getElementById('hero-dots');
-let currentSlide = 0;
+const N = heroPhotos.length;
+
+// Triple the photo list so we can drift in either direction and snap back
+// to the middle copy without a visible jump.
+const stripPhotos = [...heroPhotos, ...heroPhotos, ...heroPhotos];
+strip.innerHTML = stripPhotos.map(p =>
+  `<img class="hero-strip-img" src="${p.src}" alt="" style="--focal-y:${p.focalY}" />`
+).join('');
+
+let currentIndex = N;       // start in the middle copy, showing photos[0]+[1]
+let isAnimating = false;
 let heroTimer;
 
-slides.forEach((_, i) => {
+const stepPx = () => {
+  const first = strip.querySelector('.hero-strip-img');
+  if (!first) return 0;
+  const cs = getComputedStyle(first);
+  return first.getBoundingClientRect().width + parseFloat(cs.marginRight || 0);
+};
+
+function applyTransform(animate) {
+  strip.style.transition = animate ? 'transform 1s ease' : 'none';
+  strip.style.transform = `translateX(${-currentIndex * stepPx()}px)`;
+}
+
+function updateDots() {
+  const visible = currentIndex % N;
+  for (let i = 0; i < dotsContainer.children.length; i++) {
+    dotsContainer.children[i].classList.toggle('active', i === visible);
+  }
+}
+
+function advance(direction) {
+  if (isAnimating) return;
+  isAnimating = true;
+  currentIndex += direction;
+  applyTransform(true);
+  updateDots();
+  setTimeout(() => {
+    if (currentIndex >= 2 * N || currentIndex < N) {
+      currentIndex = N + (((currentIndex - N) % N) + N) % N;
+      applyTransform(false);
+    }
+    isAnimating = false;
+  }, 1000);
+  resetTimer();
+}
+
+function jumpTo(photoIdx) {
+  if (isAnimating) return;
+  const target = N + photoIdx;
+  if (target === currentIndex) return;
+  isAnimating = true;
+  currentIndex = target;
+  applyTransform(true);
+  updateDots();
+  setTimeout(() => { isAnimating = false; }, 1000);
+  resetTimer();
+}
+
+function resetTimer() {
+  clearInterval(heroTimer);
+  heroTimer = setInterval(() => advance(1), 5000);
+}
+
+heroPhotos.forEach((_, i) => {
   const dot = document.createElement('button');
   dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
-  dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-  dot.addEventListener('click', () => goToSlide(i));
+  dot.setAttribute('aria-label', `Go to photo ${i + 1}`);
+  dot.addEventListener('click', () => jumpTo(i));
   dotsContainer.appendChild(dot);
 });
 
-function goToSlide(n) {
-  slides[currentSlide].classList.remove('active');
-  dotsContainer.children[currentSlide].classList.remove('active');
-  currentSlide = (n + slides.length) % slides.length;
-  slides[currentSlide].classList.add('active');
-  dotsContainer.children[currentSlide].classList.add('active');
-  clearInterval(heroTimer);
-  heroTimer = setInterval(() => goToSlide(currentSlide + 1), 5000);
-}
-
-document.querySelector('.hero-arrow.left').addEventListener('click', () => goToSlide(currentSlide - 1));
-document.querySelector('.hero-arrow.right').addEventListener('click', () => goToSlide(currentSlide + 1));
-heroTimer = setInterval(() => goToSlide(currentSlide + 1), 5000);
+document.querySelector('.hero-arrow.left').addEventListener('click', () => advance(-1));
+document.querySelector('.hero-arrow.right').addEventListener('click', () => advance(1));
+window.addEventListener('resize', () => applyTransform(false));
+applyTransform(false);
+resetTimer();
 
 /* Schedule data — update with the real 2026 schedule once it's set */
 const scheduleData = [
