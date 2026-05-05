@@ -179,7 +179,7 @@ nav.site-nav {
   .hero-content { max-width: none; }
 }
 .hero-eyebrow {
-  font-family: 'Space Mono', monospace; font-size: 11px;
+  font-family: 'Space Mono', monospace; font-size: 14px;
   color: var(--color-accent); letter-spacing: 0.18em; text-transform: uppercase;
   display: flex; align-items: center; gap: 10px;
 }
@@ -222,6 +222,11 @@ nav.site-nav {
   position: absolute; bottom: 24px; right: clamp(16px, 5vw, 64px);
   display: flex; gap: 8px; align-items: center; z-index: 2;
 }
+@media (max-width: 640px) {
+  .hero-content { padding-bottom: 96px; }
+  .hero-dots { bottom: 56px; }
+  .slide-photo-label { bottom: 24px; }
+}
 .hero-dot {
   width: 6px; height: 6px; border-radius: 50%;
   background: rgba(var(--rgb-text), 0.25); cursor: pointer;
@@ -247,7 +252,7 @@ nav.site-nav {
 /* ── Section base ── */
 section { padding: clamp(48px, 7vw, 96px) clamp(16px, 5vw, 64px); }
 .section-label {
-  font-family: 'Space Mono', monospace; font-size: 10px;
+  font-family: 'Space Mono', monospace; font-size: 14px;
   color: var(--color-accent); letter-spacing: 0.2em; text-transform: uppercase;
   display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
 }
@@ -293,7 +298,7 @@ section { padding: clamp(48px, 7vw, 96px) clamp(16px, 5vw, 64px); }
 .stat-num span { color: var(--color-accent); font-size: 0.6em; vertical-align: super; }
 .stat-label {
   font-family: 'Space Mono', monospace; font-size: 9px;
-  color: var(--color-text-subtle); letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--color-text-soft); letter-spacing: 0.15em; text-transform: uppercase;
 }
 
 /* ── Schedule ── */
@@ -332,7 +337,7 @@ section { padding: clamp(48px, 7vw, 96px) clamp(16px, 5vw, 64px); }
   font-size: clamp(15px, 2vw, 18px); color: var(--color-text); letter-spacing: 0.02em;
 }
 .schedule-location {
-  font-size: 12px; color: var(--color-text-subtle); margin-top: 3px; font-family: 'Barlow', sans-serif;
+  font-size: 12px; color: var(--color-text-soft); margin-top: 3px; font-family: 'Barlow', sans-serif;
 }
 .schedule-time {
   padding: 14px 16px; font-family: 'Space Mono', monospace;
