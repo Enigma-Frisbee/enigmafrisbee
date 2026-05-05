@@ -1,6 +1,6 @@
 # Enigma Frisbee Website
 
-This is a static file site, hosted at [enigmafrisbee.com](https://enigmafrisbee.com), which allows it to be hosted (for free) on GitHub pages.
+This is a static file site, hosted at [enigmaultimate.com](https://enigmaultimate.com), which allows it to be hosted (for free) on GitHub pages.
 There's no server, anything dynamic has to happen in Javascript and the files have to be served statically from the repo.
 
 ## Modifying Text
