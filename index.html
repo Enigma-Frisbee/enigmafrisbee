@@ -190,24 +190,25 @@ const N = heroPhotos.length;
 // Triple the photo list so we can drift in either direction and snap back
 // to the middle copy without a visible jump.
 const stripPhotos = [...heroPhotos, ...heroPhotos, ...heroPhotos];
+let currentIndex = N;       // start in the middle copy, showing photos[0]+[1]
+
+// Render with the starting transform inline so the very first paint is already
+// at the right offset — avoids a flash of photos[0]+[1] before JS would translate.
+const initialOffsetPct = -currentIndex / stripPhotos.length * 100;
+strip.style.transform = `translateX(${initialOffsetPct}%)`;
 strip.innerHTML = stripPhotos.map(p =>
   `<img class="hero-strip-img" src="${p.src}" alt="" style="--focal-y:${p.focalY}" />`
 ).join('');
 
-let currentIndex = N;       // start in the middle copy, showing photos[0]+[1]
 let isAnimating = false;
 let heroTimer;
 
-const stepPx = () => {
-  const first = strip.querySelector('.hero-strip-img');
-  if (!first) return 0;
-  const cs = getComputedStyle(first);
-  return first.getBoundingClientRect().width + parseFloat(cs.marginRight || 0);
-};
-
+/* Percentage-based transform: -currentIndex / stripPhotos.length * 100% of the
+   strip is exactly `currentIndex` photo-widths, regardless of pixel rounding or
+   vw-vs-clientWidth drift, so the strip can never leak a sliver of the next photo. */
 function applyTransform(animate) {
   strip.style.transition = animate ? 'transform 1s ease' : 'none';
-  strip.style.transform = `translateX(${-currentIndex * stepPx()}px)`;
+  strip.style.transform = `translateX(${-currentIndex / stripPhotos.length * 100}%)`;
 }
 
 function updateDots() {
@@ -260,8 +261,6 @@ heroPhotos.forEach((_, i) => {
 
 document.querySelector('.hero-arrow.left').addEventListener('click', () => advance(-1));
 document.querySelector('.hero-arrow.right').addEventListener('click', () => advance(1));
-window.addEventListener('resize', () => applyTransform(false));
-applyTransform(false);
 resetTimer();
 
 /* Schedule — events loaded asynchronously from the public Google Calendar */
