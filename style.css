@@ -122,7 +122,9 @@ nav.site-nav {
   --hero-height: max(calc(100svh - 81px), 480px);
   position: relative;
   height: var(--hero-height);
+  padding: 0;
   overflow: hidden; background: var(--color-bg);
+  container-type: inline-size;
 }
 .hero-strip {
   position: absolute; top: 0; left: 0;
@@ -131,13 +133,12 @@ nav.site-nav {
   will-change: transform;
 }
 .hero-strip-img {
-  flex: 0 0 calc(50vw - 1px);
+  flex: 0 0 50cqw;
   height: 100%;
   object-fit: cover;
   object-position: 50% var(--focal-y, 30%);
   display: block;
   pointer-events: none;
-  margin-right: 2px;
 }
 .hero-strip-overlay {
   position: absolute; inset: 0;
@@ -152,8 +153,8 @@ nav.site-nav {
       rgba(var(--rgb-bg), 0) 55%,
       rgba(var(--rgb-bg), 0.5) 100%);
 }
-@media (max-width: 640px) {
-  .hero-strip-img { flex-basis: 100vw; margin-right: 0; }
+@media (max-width: 767px) and (orientation: portrait) {
+  .hero-strip-img { flex-basis: 100cqw; }
   .hero-strip-overlay {
     background: linear-gradient(to bottom, rgba(var(--rgb-bg), 0.3) 0%, rgba(var(--rgb-bg), 0.92) 55%, var(--color-bg) 100%);
   }
@@ -175,7 +176,7 @@ nav.site-nav {
   pointer-events: none;
   max-width: min(680px, 58%);
 }
-@media (max-width: 640px) {
+@media (max-width: 767px) and (orientation: portrait) {
   .hero-content { max-width: none; }
 }
 .hero-eyebrow {
@@ -222,7 +223,7 @@ nav.site-nav {
   position: absolute; bottom: 24px; right: clamp(16px, 5vw, 64px);
   display: flex; gap: 8px; align-items: center; z-index: 2;
 }
-@media (max-width: 640px) {
+@media (max-width: 767px) and (orientation: portrait) {
   .hero-content { padding-bottom: 96px; }
   .hero-dots { bottom: 56px; }
   .slide-photo-label { bottom: 24px; }
@@ -247,7 +248,7 @@ nav.site-nav {
 .hero-arrow:hover { background: rgba(var(--rgb-accent), 0.6); }
 .hero-arrow.left { left: 16px; }
 .hero-arrow.right { right: 16px; }
-@media (max-width: 640px) { .hero-arrow { display: none; } }
+@media (max-width: 767px) and (orientation: portrait) { .hero-arrow { display: none; } }
 
 /* ── Section base ── */
 section { padding: clamp(48px, 7vw, 96px) clamp(16px, 5vw, 64px); }
