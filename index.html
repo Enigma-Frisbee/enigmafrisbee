@@ -101,9 +101,14 @@
     <div class="section-label">2026 Season</div>
     <h2 class="section-title" style="margin-bottom:32px;">Schedule</h2>
     <div id="schedule-rows"></div>
-    <a href="https://calendar.google.com/calendar/u/0/r?cid=enigmacaptains@gmail.com" class="schedule-gcal" target="_blank" rel="noopener">
-      + Add to Google Calendar
-    </a>
+    <div class="schedule-actions">
+      <a href="https://calendar.google.com/calendar/u/0/r?cid=enigmacaptains@gmail.com" class="schedule-gcal" target="_blank" rel="noopener">
+        + Add to Google Calendar
+      </a>
+      <a href="https://calendar.google.com/calendar/embed?src=enigmacaptains@gmail.com&mode=AGENDA" class="schedule-gcal" target="_blank" rel="noopener">
+        View Full Calendar →
+      </a>
+    </div>
   </div>
 </section>
 
@@ -278,10 +283,10 @@ function renderScheduleRows(rows) {
     </div>
     <div class="schedule-info">
       <div class="schedule-name">${escapeHtml(ev.name)}</div>
+      ${ev.time ? `<div class="schedule-time">${escapeHtml(ev.time)}</div>` : ''}
       <div class="schedule-location">${escapeHtml(ev.location)}</div>
       ${ev.type ? `<span class="schedule-tag ${escapeHtml(ev.type)}">${escapeHtml(ev.type)}</span>` : ''}
     </div>
-    <div class="schedule-time">${escapeHtml(ev.time)}</div>
   </div>`).join('');
 }
 

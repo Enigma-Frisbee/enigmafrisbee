@@ -307,7 +307,7 @@ section { padding: clamp(48px, 2vw, 96px) clamp(16px, 5vw, 64px); }
 .schedule-inner { max-width: 1000px; margin: 0 auto; }
 .schedule-row {
   display: grid;
-  grid-template-columns: 80px 1fr auto;
+  grid-template-columns: 80px 1fr;
   align-items: center; gap: 0;
   background: var(--color-bg-raised);
   margin-bottom: 3px;
@@ -341,12 +341,12 @@ section { padding: clamp(48px, 2vw, 96px) clamp(16px, 5vw, 64px); }
   font-size: 12px; color: var(--color-text-soft); margin-top: 3px; font-family: 'Barlow', sans-serif;
 }
 .schedule-time {
-  padding: 14px 16px; font-family: 'Space Mono', monospace;
+  font-family: 'Space Mono', monospace;
   font-size: 11px; color: var(--color-text-faint); white-space: nowrap;
+  margin-top: 3px;
 }
 @media (max-width: 520px) {
   .schedule-row { grid-template-columns: 64px 1fr; }
-  .schedule-time { display: none; }
 }
 .schedule-tag {
   display: inline-block; font-family: 'Space Mono', monospace;
@@ -355,8 +355,11 @@ section { padding: clamp(48px, 2vw, 96px) clamp(16px, 5vw, 64px); }
 }
 .schedule-tag.practice { background: rgba(var(--rgb-primary), 0.15); color: var(--color-primary); }
 .schedule-tag.tournament { background: rgba(var(--rgb-accent), 0.15); color: var(--color-accent); }
+.schedule-actions {
+  display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px;
+}
 .schedule-gcal {
-  display: inline-flex; align-items: center; gap: 8px; margin-top: 24px;
+  display: inline-flex; align-items: center; gap: 8px;
   font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
   font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--color-text-subtle); border: 1px solid var(--color-border);
