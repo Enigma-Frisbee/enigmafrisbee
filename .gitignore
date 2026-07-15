@@ -2,6 +2,7 @@
 images/*
 !images/*.svg
 !images/*_minified.jpg
+!images/*_minified.webp
 # Moat task system
 .moat/
 
