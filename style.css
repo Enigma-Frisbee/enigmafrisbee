@@ -133,7 +133,7 @@ nav.site-nav {
   will-change: transform;
 }
 .hero-strip-img {
-  flex: 0 0 50cqw;
+  flex: 0 0 var(--panelw, 50cqw);
   height: 100%;
   object-fit: cover;
   object-position: 50% var(--focal-y, 30%);
@@ -154,7 +154,6 @@ nav.site-nav {
       rgba(var(--rgb-bg), 0.5) 100%);
 }
 @media (max-width: 767px) and (orientation: portrait) {
-  .hero-strip-img { flex-basis: 100cqw; }
   .hero-strip-overlay {
     background: linear-gradient(to bottom, rgba(var(--rgb-bg), 0.3) 0%, rgba(var(--rgb-bg), 0.92) 55%, var(--color-bg) 100%);
   }
@@ -235,20 +234,6 @@ nav.site-nav {
   border: 0; padding: 0;
 }
 .hero-dot.active { background: var(--color-accent); transform: scale(1.4); }
-
-.hero-arrow {
-  position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
-  background: rgba(var(--rgb-bg), 0.6); border: 1px solid rgba(var(--rgb-white), 0.1);
-  color: var(--color-text); width: 40px; height: 40px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; font-size: 16px; transition: background 0.2s;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-}
-.hero-arrow:hover { background: rgba(var(--rgb-accent), 0.6); }
-.hero-arrow.left { left: 16px; }
-.hero-arrow.right { right: 16px; }
-@media (max-width: 767px) and (orientation: portrait) { .hero-arrow { display: none; } }
 
 /* ── Section base ── */
 section { padding: clamp(48px, 2vw, 96px) clamp(16px, 5vw, 64px); }

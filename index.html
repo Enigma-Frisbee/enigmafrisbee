@@ -46,9 +46,6 @@
   <div class="hero-strip" id="hero-strip"></div>
   <div class="hero-strip-overlay"></div>
 
-  <button class="hero-arrow left" aria-label="Previous slide">&#8592;</button>
-  <button class="hero-arrow right" aria-label="Next slide">&#8594;</button>
-
   <div class="slide-photo-label">Photos by <a href="https://www.gabrielcabreraphoto.com/" target="_blank" rel="noopener noreferrer">Gabriel Cabrera</a></div>
 
   <div class="hero-content">
@@ -156,7 +153,7 @@ const escapeHtml = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','
 const staticTickerItems = [
   { text: 'Enigma 2026 Season is Here' },
   { text: 'Tryouts Open — Join the Discord', href: 'https://discord.gg/8chXC27xF' },
-  { text: 'Practice: Tuesdays @ Yankee Park 6–8PM' },
+  { text: 'Practice: Tuesdays @ Yankee Park 6:15 PM' },
 ];
 const tickerEl = document.getElementById('ticker-inner');
 const star = '<svg class="ticker-star" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,2 15,9 22,9.5 16.5,14.5 18.5,22 12,17.8 5.5,22 7.5,14.5 2,9.5 9,9"/></svg>';
@@ -173,8 +170,11 @@ function renderTicker(items) {
 }
 renderTicker(staticTickerItems);
 
-/* Hero conveyor: flat strip of portraits, advances one panel at a time
-   so the right photo becomes the left and a new one slides in on the right. */
+/* Hero carousel: a recycling window of just V+1 images (V = photos visible at
+   once). Each advance slides the track left by one panel, then recycles the
+   element that scrolled off the left edge to the right end and points it at the
+   next photo. Only V+1 <img> elements ever exist, so images load just-in-time —
+   the incoming buffer image has the full ~5s pause to load before it's shown. */
 const heroPhotos = [
   { src: 'images/DG_09485_minified.webp', focalY: '38%' },
   { src: 'images/DG_09929_minified.webp', focalY: '28%' },
@@ -187,73 +187,101 @@ const heroPhotos = [
   { src: 'images/DG_00141_minified.webp', focalY: '12%' },
   { src: 'images/DG_09519_minified.webp', focalY: '30%' },
 ];
-const heroEl = document.getElementById('hero');
 const strip = document.getElementById('hero-strip');
 const dotsContainer = document.getElementById('hero-dots');
 const N = heroPhotos.length;
 
-// Triple the photo list so we can drift in either direction and snap back
-// to the middle copy without a visible jump.
-const stripPhotos = [...heroPhotos, ...heroPhotos, ...heroPhotos];
-let currentIndex = N;       // start in the middle copy, showing photos[0]+[1]
+const INTERVAL_MS = 5000;   // pause on each frame before advancing
+const SLIDE_MS = 900;       // duration of the slide animation
 
-// Render with the starting transform inline so the very first paint is already
-// at the right offset — avoids a flash of photos[0]+[1] before JS would translate.
-const initialOffsetPct = -currentIndex / stripPhotos.length * 100;
-strip.style.transform = `translateX(${initialOffsetPct}%)`;
-strip.innerHTML = stripPhotos.map(p =>
-  `<img class="hero-strip-img" src="${p.src}" alt="" style="--focal-y:${p.focalY}" />`
-).join('');
+// One-up in portrait mobile, two-up otherwise. Matches the CSS breakpoint.
+const mql = matchMedia('(max-width: 767px) and (orientation: portrait)');
+const visibleCount = () => (mql.matches ? 1 : 2);
 
+let panels = [];            // the live <img> elements, left-to-right
+let startIdx = 0;           // photo index shown in the leftmost visible panel
 let isAnimating = false;
-let heroTimer;
+let heroTimer = null;
 
-/* Percentage-based transform: -currentIndex / stripPhotos.length * 100% of the
-   strip is exactly `currentIndex` photo-widths, regardless of pixel rounding or
-   vw-vs-clientWidth drift, so the strip can never leak a sliver of the next photo. */
-function applyTransform(animate) {
-  strip.style.transition = animate ? 'transform 1s ease' : 'none';
-  strip.style.transform = `translateX(${-currentIndex / stripPhotos.length * 100}%)`;
+function applyPhoto(img, photoIdx) {
+  const p = heroPhotos[photoIdx];
+  img.style.setProperty('--focal-y', p.focalY);
+  if (img.getAttribute('src') !== p.src) img.src = p.src;
 }
 
-function updateDots() {
-  const visible = currentIndex % N;
-  for (let i = 0; i < dotsContainer.children.length; i++) {
-    dotsContainer.children[i].classList.toggle('active', i === visible);
+function makePanel(photoIdx) {
+  const img = document.createElement('img');
+  img.className = 'hero-strip-img';
+  img.alt = '';
+  img.decoding = 'async';
+  applyPhoto(img, photoIdx);
+  return img;
+}
+
+// (Re)build the window of V+1 panels starting at startIdx. Used on init and
+// whenever V changes (orientation flip) or a dot forces a jump.
+function buildWindow() {
+  const V = visibleCount();
+  strip.style.setProperty('--panelw', V === 1 ? '100cqw' : '50cqw');
+  strip.style.transition = 'none';
+  strip.style.transform = 'translateX(0)';
+  panels = [];
+  strip.replaceChildren();
+  for (let i = 0; i <= V; i++) {
+    const img = makePanel((startIdx + i) % N);
+    strip.appendChild(img);
+    panels.push(img);
   }
+  updateDots();
 }
 
-function advance(direction) {
+function advance() {
   if (isAnimating) return;
+  const V = visibleCount();
+  // Never slide onto a half-loaded frame; retry on the next tick.
+  if (!panels[V] || !panels[V].complete) return;
   isAnimating = true;
-  currentIndex += direction;
-  applyTransform(true);
-  updateDots();
-  setTimeout(() => {
-    if (currentIndex >= 2 * N || currentIndex < N) {
-      currentIndex = N + (((currentIndex - N) % N) + N) % N;
-      applyTransform(false);
-    }
+
+  strip.style.transition = `transform ${SLIDE_MS}ms ease`;
+  strip.style.transform = 'translateX(calc(-1 * var(--panelw)))';
+
+  strip.addEventListener('transitionend', function onEnd(e) {
+    if (e.propertyName !== 'transform') return;
+    strip.removeEventListener('transitionend', onEnd);
+
+    // Recycle the element that scrolled off the left to the right end.
+    const first = panels.shift();
+    startIdx = (startIdx + 1) % N;
+    applyPhoto(first, (startIdx + V) % N);
+    strip.appendChild(first);
+    panels.push(first);
+
+    strip.style.transition = 'none';
+    strip.style.transform = 'translateX(0)';
+    void strip.offsetWidth;   // force reflow so the reset lands before the next slide
+
     isAnimating = false;
-  }, 1000);
-  resetTimer();
+    updateDots();
+  });
 }
 
 function jumpTo(photoIdx) {
-  if (isAnimating) return;
-  const target = N + photoIdx;
-  if (target === currentIndex) return;
-  isAnimating = true;
-  currentIndex = target;
-  applyTransform(true);
-  updateDots();
-  setTimeout(() => { isAnimating = false; }, 1000);
+  if (photoIdx === startIdx) return;
+  startIdx = photoIdx;
+  isAnimating = false;
+  buildWindow();      // hard cut — simple and reliable for an N-away jump
   resetTimer();
+}
+
+function updateDots() {
+  for (let i = 0; i < dotsContainer.children.length; i++) {
+    dotsContainer.children[i].classList.toggle('active', i === startIdx);
+  }
 }
 
 function resetTimer() {
   clearInterval(heroTimer);
-  heroTimer = setInterval(() => advance(1), 5000);
+  heroTimer = document.hidden ? null : setInterval(advance, INTERVAL_MS);
 }
 
 heroPhotos.forEach((_, i) => {
@@ -264,8 +292,16 @@ heroPhotos.forEach((_, i) => {
   dotsContainer.appendChild(dot);
 });
 
-document.querySelector('.hero-arrow.left').addEventListener('click', () => advance(-1));
-document.querySelector('.hero-arrow.right').addEventListener('click', () => advance(1));
+// Rebuild when the layout flips between one-up and two-up.
+mql.addEventListener('change', () => { isAnimating = false; buildWindow(); });
+
+// Pause the timer while the tab is hidden so advances don't queue up.
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { clearInterval(heroTimer); heroTimer = null; }
+  else resetTimer();
+});
+
+buildWindow();
 resetTimer();
 
 /* Schedule — events loaded asynchronously from the public Google Calendar */
